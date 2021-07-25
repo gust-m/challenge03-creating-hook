@@ -5,6 +5,7 @@ import { ProductList } from './styles';
 import { api } from '../../services/api';
 import { formatPrice } from '../../util/format';
 import { useCart } from '../../hooks/useCart';
+import { useCallback } from 'react';
 
 interface Product {
   id: number;
@@ -21,7 +22,7 @@ interface CartItemsAmount {
   [key: number]: number;
 }
 
-const Home = (): JSX.Element => {
+export const Home = (): JSX.Element => {
   // const [products, setProducts] = useState<ProductFormatted[]>([]);
   // const { addProduct, cart } = useCart();
 
@@ -30,16 +31,17 @@ const Home = (): JSX.Element => {
   // }, {} as CartItemsAmount)
 
   useEffect(() => {
-    async function loadProducts() {
+    const loadProducts = async () => {
       // TODO
     }
 
     loadProducts();
   }, []);
 
-  function handleAddProduct(id: number) {
+  const handleAddProduct = useCallback((id: number) => {
+
     // TODO
-  }
+  }, []);
 
   return (
     <ProductList>
@@ -63,5 +65,3 @@ const Home = (): JSX.Element => {
     </ProductList>
   );
 };
-
-export default Home;

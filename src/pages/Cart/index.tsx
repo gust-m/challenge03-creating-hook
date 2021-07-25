@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCallback } from 'react';
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -17,7 +18,7 @@ interface Product {
   amount: number;
 }
 
-const Cart = (): JSX.Element => {
+export const Cart = (): JSX.Element => {
   // const { cart, removeProduct, updateProductAmount } = useCart();
 
   // const cartFormatted = cart.map(product => ({
@@ -30,17 +31,17 @@ const Cart = (): JSX.Element => {
   //     }, 0)
   //   )
 
-  function handleProductIncrement(product: Product) {
+  const handleProductIncrement = useCallback((product: Product) => {
     // TODO
-  }
+  }, []);
 
-  function handleProductDecrement(product: Product) {
+  const handleProductDecrement = useCallback((product: Product) => {
     // TODO
-  }
+  }, []);
 
-  function handleRemoveProduct(productId: number) {
+  const handleRemoveProduct = useCallback((productId: number) => {
     // TODO
-  }
+  }, []);
 
   return (
     <Container>
@@ -115,5 +116,3 @@ const Cart = (): JSX.Element => {
     </Container>
   );
 };
-
-export default Cart;
