@@ -24,9 +24,7 @@ interface CartItemsAmount {
 
 export const Home = (): JSX.Element => {
   const [products, setProducts] = useState<ProductFormatted[]>([]);
-  const { addProduct, cart, stockProducts } = useCart();
-
-  console.log(cart);
+  const { addProduct, cart } = useCart();
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
     const Acc = {...sumAmount};
@@ -38,7 +36,13 @@ export const Home = (): JSX.Element => {
   useEffect(() => {
     const loadProducts = async () => {
       const { data } = await api.get('/products');
-      setProducts(data);
+      const updatedProducts: ProductFormatted[] = data.map((product: Product) => {
+        const newProduct = Object.assign(product, {
+          priceFormatted: formatPrice(product.price),
+        });
+        return newProduct;
+      });
+      setProducts(updatedProducts);
     }
 
     loadProducts();
@@ -48,8 +52,6 @@ export const Home = (): JSX.Element => {
     addProduct(id);
   }, [addProduct]);
 
-  console.log(stockProducts);
-
   return (
     <ProductList>
       {products.map(product => {
@@ -57,7 +59,7 @@ export const Home = (): JSX.Element => {
           <li key={product.id}>
             <img src={product.image} alt={product.title} />
             <strong>{product.title}</strong>
-            <span>{product.priceFormatted}</span>
+            <span>{formatPrice(product.price)}</span>
             <button
               type="button"
               data-testid="add-product-button"
@@ -65,9 +67,6 @@ export const Home = (): JSX.Element => {
             >
               <div
                 data-testid="cart-product-quantity"
-                className={
-                  stockProducts[product.id]?.amount === 0 ? 'full' : ''
-                }
               >
                 <MdAddShoppingCart size={16} color="#FFF" />
                 {cartItemsAmount[product.id] || 0}
