@@ -6,7 +6,7 @@ import logo from '../../assets/images/logo.svg';
 import { Container, Cart } from './styles';
 import { useCart } from '../../hooks/useCart';
 
-export const Header = (): JSX.Element => {
+const Header = (): JSX.Element => {
   const { cart } = useCart();
   const cartSize = cart.length;
 
@@ -28,3 +28,5 @@ export const Header = (): JSX.Element => {
     </Container>
   );
 };
+
+export default Header;
